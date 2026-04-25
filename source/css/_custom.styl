@@ -103,3 +103,233 @@ $boxshadow-card-float = 0 12px 16px -4px rgba(0, 0, 0, 0.2)
 $boxshadow-button = 0 0 2px 0px rgba(0, 0, 0, 0.04), 0 0 8px 0px rgba(0, 0, 0, 0.04)
 $boxshadow-block = 0 1px 4px 0px rgba(0, 0, 0, 0.02), 0 2px 8px 0px rgba(0, 0, 0, 0.02)
 $boxshadow-toast = 0 4px 8px 0px rgba(0, 0, 0, 0.1), 0 12px 16px -4px rgba(0, 0, 0, 0.2)
+
+/* 文章内字数统计&阅读时长 */
+.bread-nav div#page-words span.sep:before
+  content: '|'
+
+#page-words
+  font-size: $fs-14
+  color: var(--text-p3)
+  margin-top: 4px
+  
+  span
+    display: inline-block
+
+#tag
+  font-size: $fs-14
+  color: var(--text-p3)
+  margin-top: 4px
+  
+  .cap.breadcrumb
+    color: var(--text-link)
+    
+    &:hover
+      color: var(--theme)
+
+/* 页面底部字数统计 */
+.post-count
+  scrollbar-width: none
+  color: var(--text-p2)
+
+.totalcount
+  color: var(--text-p2)
+
+.page-footer
+  text-align: center
+  margin: 0 auto
+  width: 100%
+
+/* 说说页面样式 - 仿时间线风格 */
+#talk
+  max-width: 900px
+  margin: 0 auto
+  padding: 20px 0
+  position: relative
+  padding-left: 16px
+  
+  &:before
+    content: ''
+    position: absolute
+    z-index: 0
+    background: var(--block)
+    width: 4px
+    left: 0px
+    border-radius: 8px
+    top: .5rem
+    bottom: 0
+
+.talk-container
+  position: relative
+  min-height: 200px
+
+.talk-item
+  position: relative
+  display: flex
+  flex-direction: column
+  align-items: flex-start
+  box-sizing: border-box
+  max-width: 100%
+  margin-bottom: 1.5rem
+  padding: 0
+  
+  &:before
+    content: ''
+    position: absolute
+    left: -16px
+    width: 4px
+    border-radius: 12px
+    height: 4px
+    top: 'calc(50% - 0.5 * 4px)'
+    background: var(--text-meta)
+    transition: all 0.3s ease
+    transform: scale(2)
+  
+  &:hover:before
+    background: var(--theme)
+    height: 16px
+    top: 'calc(50% - 0.5 * 16px)'
+    transform: scale(1)
+
+.talk-content
+  background: var(--card)
+  border-radius: 16px
+  border-top-left-radius: 2px
+  padding: 0.75rem 1rem
+  margin-top: 4px
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04)
+  width: 100%
+  box-sizing: border-box
+
+.talk-header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  margin-bottom: 0.5rem
+
+.talk-time
+  font-size: 13px
+  font-weight: 500
+  color: var(--text-p3)
+  line-height: 1
+
+.talk-text
+  font-size: 15px
+  line-height: 1.5
+  color: var(--text-p1)
+  margin: 0.5rem 0
+  word-break: break-word
+  
+  a
+    color: var(--text-link)
+    text-decoration: none
+    
+    &:hover
+      text-decoration: underline
+
+.talk-images
+  display: flex
+  flex-wrap: wrap
+  gap: 4px
+  margin: 0.5rem 0
+
+.talk-image-item
+  position: relative
+  width: 120px
+  height: 120px
+  border-radius: 8px
+  overflow: hidden
+  cursor: pointer
+  
+  img
+    width: 100%
+    height: 100%
+    object-fit: cover
+    transition: transform 0.3s ease
+    
+    &:hover
+      transform: scale(1.05)
+
+.talk-image-overlay
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background: rgba(0, 0, 0, 0.9)
+  display: flex
+  align-items: center
+  justify-content: center
+  z-index: 9999
+  cursor: pointer
+  
+  img
+    max-width: 90%
+    max-height: 90%
+    object-fit: contain
+
+.talk-footer
+  margin-top: 0.5rem
+  display: flex
+  gap: 8px
+  align-items: center
+  flex-wrap: wrap
+
+.talk-views
+  display: flex
+  align-items: center
+  gap: 4px
+  font-size: 13px
+  color: var(--text-p4)
+  
+  svg
+    width: 14px
+    height: 14px
+
+.talk-comment-btn
+  display: flex
+  align-items: center
+  gap: 4px
+  padding: 4px 8px
+  font-size: 13px
+  color: var(--text-p4)
+  background: var(--block)
+  border-radius: 4px
+  cursor: pointer
+  transition: all 0.3s ease
+  user-select: none
+  
+  svg
+    width: 14px
+    height: 14px
+  
+  &:hover
+    color: var(--theme)
+    background: var(--card)
+    transform: translateY(-1px)
+
+.talk-loading,
+.talk-error,
+.talk-empty
+  text-align: center
+  padding: 40px 20px
+  color: var(--text-p3)
+  font-size: 15px
+
+.talk-error
+  color: #ff5f56
+
+// 响应式设计
+@media screen and (max-width: 768px)
+  #talk
+    padding-left: 12px
+  
+  .talk-item:before
+    left: -12px
+  
+  .talk-text
+    font-size: 14px
+  
+  .talk-image-item
+    width: 100px
+    height: 100px
