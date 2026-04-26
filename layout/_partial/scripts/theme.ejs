@@ -63,30 +63,30 @@
     hud?.toast?.(message)
   }
 
-  // 绑定三个主题切换按钮
+  // 更新主题切换按钮图标
+  const updateThemeToggleIcon = (theme) => {
+    const toggleBtn = document.getElementById('ThemeToggle')
+    if (!toggleBtn) return
+
+    const icons = {
+      light: 'https://upyun.thatcdn.cn/public/img/icon/Sun.png',
+      dark: 'https://upyun.thatcdn.cn/public/img/icon/Moon.png',
+      auto: 'https://upyun.thatcdn.cn/public/img/icon/AI.png'
+    }
+    toggleBtn.src = icons[theme] || icons.light
+  }
+
+  // 绑定单一主题切换按钮
   const bindThemeButtons = () => {
-    const moonBtn = document.getElementById('ThemeM')
-    const sunBtn = document.getElementById('ThemeL')
-    const aiBtn = document.getElementById('ThemeAI')
+    const toggleBtn = document.getElementById('ThemeToggle')
 
-    if (moonBtn) {
-      moonBtn.closest('a')?.addEventListener('click', (e) => {
+    if (toggleBtn) {
+      toggleBtn.closest('a')?.addEventListener('click', (e) => {
         e.preventDefault()
-        switchToTheme('dark', '切换到深色模式')
-      })
-    }
-
-    if (sunBtn) {
-      sunBtn.closest('a')?.addEventListener('click', (e) => {
-        e.preventDefault()
-        switchToTheme('light', '切换到浅色模式')
-      })
-    }
-
-    if (aiBtn) {
-      aiBtn.closest('a')?.addEventListener('click', (e) => {
-        e.preventDefault()
-        switchToTheme('auto', '跟随系统')
+        switchTheme()
+        // 切换后更新图标
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'auto'
+        updateThemeToggleIcon(currentTheme)
       })
     }
   }
@@ -100,9 +100,13 @@
       utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     }
     utils.dark.method.toggle.start();
-    
+
     // 绑定主题切换按钮
     bindThemeButtons()
+
+    // 初始化按钮图标
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'auto'
+    updateThemeToggleIcon(currentTheme)
   })()
 
   // PJAX 后重新绑定按钮

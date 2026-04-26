@@ -75,16 +75,39 @@ const util = {
 }
 
 const hud = {
+  _currentToast: null,
+  _toastTimeout: null,
+
   toast: (msg, duration) => {
     const d = Number(isNaN(duration) ? 2000 : duration);
+
+    // 清除之前的 toast 和定时器
+    if (hud._currentToast && hud._currentToast.parentNode) {
+      hud._currentToast.parentNode.removeChild(hud._currentToast);
+    }
+    if (hud._toastTimeout) {
+      clearTimeout(hud._toastTimeout);
+    }
+
+    // 创建新的 toast
     var el = document.createElement('div');
     el.classList.add('toast');
     el.classList.add('show');
     el.innerHTML = msg;
     document.body.appendChild(el);
 
-    setTimeout(function () { document.body.removeChild(el) }, d);
+    // 保存当前 toast 引用
+    hud._currentToast = el;
 
+    // 设置定时器自动移除
+    hud._toastTimeout = setTimeout(function () {
+      if (el.parentNode) {
+        el.parentNode.removeChild(el);
+      }
+      if (hud._currentToast === el) {
+        hud._currentToast = null;
+      }
+    }, d);
   },
 
 }
