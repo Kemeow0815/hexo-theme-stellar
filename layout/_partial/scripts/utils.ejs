@@ -365,6 +365,21 @@
       utils.cleanupPlugins();
       utils.cleanupPjaxListeners();
     },
+
+    // 视口懒加载 - 当元素进入视口时执行回调
+    viewportLazyload: (target, func, enabled = true) => {
+      if (!enabled || !("IntersectionObserver" in window)) {
+        func();
+        return;
+      }
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].intersectionRatio > 0) {
+          func();
+          observer.disconnect();
+        }
+      });
+      observer.observe(target);
+    },
   };
 
   // 自动处理 PJAX 事件
