@@ -1,0 +1,23 @@
+.widget-wrapper.welcome
+  .widget-body
+    padding: 0.5rem 1rem
+    
+    #welcome-info
+      font-size: $fs-14
+      line-height: 1.8
+      color: var(--text-p1)
+      
+      b
+        font-weight: 600
+        
+      span
+        color: var(--theme)
+        
+      br
+        margin-bottom: 0.25rem
+        
+  // 左侧栏适配
+  .l_left &
+    .widget-body
+      background: var(--bg-a50)
+      border-radius: $border-card-s

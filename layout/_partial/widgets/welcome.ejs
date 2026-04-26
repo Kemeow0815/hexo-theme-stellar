@@ -1,0 +1,19 @@
+<%
+function layoutDiv() {
+  var el = '';
+  el += `<widget class="widget-wrapper${scrollreveal(' ')} welcome">`
+    if (item.title) {
+      el += '<div class="widget-header dis-select">';
+      el += '<span class="name">' + item.title + '</span>';
+      el += '</div>';
+    }
+    el += '<div class="widget-body fs14" style="' + (item.content_css || '') + '">';
+      el += '<div id="' + (item.content_id || 'welcome-info') + '">';
+      el += item.content_html || '';
+      el += '</div>';
+    el += '</div>';
+  el += '</widget>';
+  return el;
+}
+%>
+<%- layoutDiv() %>

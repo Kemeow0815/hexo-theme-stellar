@@ -37,7 +37,11 @@ meta:
   license: 许可协议
   share: 分享文章
   contributors: 本文贡献者
-  date_suffix:
+  donate: 捐赠处
+
+donate_tip: 点击爱心给作者加鸡腿~
+
+date_suffix:
     just: 刚刚
     min: 分钟前
     hour: 小时前

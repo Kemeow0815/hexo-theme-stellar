@@ -1,6 +1,10 @@
 'use strict';
 
 hexo.extend.helper.register('pretty_url', function (path = '') {
+  // 处理 null 或 undefined 的情况
+  if (!path) {
+    return '';
+  }
   if (path.startsWith('http://') || path.startsWith('https://')) {
     // 如果是绝对 URL，直接返回
     return path;

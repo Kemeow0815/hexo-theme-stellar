@@ -1,0 +1,167 @@
+<%
+// 关于页面专用布局
+// 页面数据配置
+const aboutData = {
+  // 作者信息
+  author: {
+    leftTags: ["💻 Like数码科技", "🥣 干饭魂 干饭人", "🕊 咕咕咕咕咕咕~", "🧱 CV工程师"],
+    rightTags: ["吃饭不如碎觉 💤", "乐观 积极 向上 🤝", "专攻各种困难 🔨", "人不狠话超多 💢"],
+    avatar: config.avatar || theme.default.avatar
+  },
+  // 个人信息和问候
+  myInfo: {
+    title1: "Hello there!",
+    title2: "我是",
+    card: "欢迎来到我的",
+    inlineWord2: "小世界"
+  },
+  // 网站提示
+  siteTips: {
+    tips: "关于本站",
+    connect1: "分享技术与生活",
+    connect2: "记录",
+    inlineWord: "成长点滴",
+    masks: [
+      { text: "热爱技术" },
+      { text: "热爱生活" },
+      { text: "持续学习" },
+      { text: "探索未知" }
+    ]
+  },
+  // 技能数据
+  skills: {
+    className: "开启创造力",
+    subtitle: "技能",
+    list: [
+      { name: "Vue", color: "#b8f0ae", icon: "https://api.iconify.design/devicon:vuejs.svg" },
+      { name: "Java", color: "#fff", icon: "https://api.iconify.design/devicon:java.svg" },
+      { name: "Webpack", color: "#2e3a41", icon: "https://api.iconify.design/devicon:webpack.svg" },
+      { name: "Photoshop", color: "#4082c3", icon: "https://api.iconify.design/devicon:photoshop.svg" },
+      { name: "Swift", color: "#eb6840", icon: "https://api.iconify.design/devicon:swift.svg" },
+      { name: "Python", color: "#fff", icon: "https://api.iconify.design/devicon:python.svg" },
+      { name: "Node", color: "#333", icon: "https://api.iconify.design/devicon:nodejs.svg" },
+      { name: "Git", color: "#df5b40", icon: "https://api.iconify.design/devicon:git.svg" },
+      { name: "CSS", color: "#2c51db", icon: "https://api.iconify.design/devicon:css3.svg" },
+      { name: "JS", color: "#f7cb4f", icon: "https://api.iconify.design/devicon:javascript.svg" }
+    ]
+  },
+  // 历程数据
+  journey: {
+    tip: "历程",
+    title: "我的故事",
+    lishi: "时间线",
+    content: "记录成长的每一步"
+  }
+};
+%>
+
+<div id="about-page">
+  <!-- 作者头像区域 -->
+  <div class="author-main">
+    <div class="author-tag-left">
+      <% aboutData.author.leftTags.forEach((tag, index) => { %>
+        <span class="author-tag" style="animation-delay: <%= index * 0.6 %>s"><%= tag %></span>
+      <% }); %>
+    </div>
+    
+    <div class="mainports">
+      <div class="author-box">
+        <div class="author-img">
+          <img 
+            class="no-lightbox author-avatar" 
+            src="<%= aboutData.author.avatar %>" 
+            alt="<%= config.author || '作者头像' %>"
+            width="180"
+            height="180"
+          />
+        </div>
+      </div>
+    </div>
+    
+    <div class="author-tag-right">
+      <% aboutData.author.rightTags.forEach((tag, index) => { %>
+        <span class="author-tag" style="animation-delay: <%= index * 0.6 %>s"><%= tag %></span>
+      <% }); %>
+    </div>
+  </div>
+
+  <!-- 页面内容区域 -->
+  <div class="author-page-content">
+    <!-- 第一行：个人信息和问候 -->
+    <div class="author-content">
+      <div class="author-content-item myInfoAndSayHello" style="text-align: center; width: 100%">
+        <div class="title1"><%= aboutData.myInfo.title1 %></div>
+        <div class="title2">
+          <%= aboutData.myInfo.title2 %>
+          <span class="inline-word"><%= config.author || '博主' %></span>
+        </div>
+        <div class="title1">
+          <%= aboutData.myInfo.card %>
+          <span class="inline-word"><%= aboutData.myInfo.inlineWord2 %></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第二行：网站提示和座右铭 -->
+    <div class="author-content">
+      <div class="author-content-item aboutsiteTips">
+        <div class="author-content-item-tips"><%= aboutData.siteTips.tips %></div>
+        <h2>
+          <%= aboutData.siteTips.connect1 %>
+          <br />
+          <%= aboutData.siteTips.connect2 %>
+          <span class="inline-word"><%= aboutData.siteTips.inlineWord %></span>
+          <div class="mask">
+            <span class="first-tips"><%= aboutData.siteTips.masks[0].text %></span>
+            <span><%= aboutData.siteTips.masks[1].text %></span>
+            <span data-up><%= aboutData.siteTips.masks[2].text %></span>
+            <span data-show><%= aboutData.siteTips.masks[3].text %></span>
+          </div>
+        </h2>
+      </div>
+      
+      <div class="author-content-item maxim">
+        <div class="author-content-item-tips">座右铭</div>
+        <div class="author-content-item-title">保持热爱</div>
+        <div class="author-content-item-content">奔赴山海</div>
+      </div>
+    </div>
+
+    <!-- 第三行：技能展示 -->
+    <div class="author-content">
+      <div class="author-content-item creativityMain">
+        <div class="author-content-item-tips"><%= aboutData.skills.subtitle %></div>
+        <div class="author-content-item-list">
+          <% aboutData.skills.list.forEach(skill => { %>
+            <div class="cardInfo">
+              <div class="skill-badge" style="--skill-color: <%= skill.color %>">
+                <img src="<%= skill.icon %>" alt="<%= skill.name %>" class="skill-icon" />
+                <span class="skill-name"><%= skill.name %></span>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第四行：历程 -->
+    <div class="author-content">
+      <div class="author-content-item single" style="width: 100%">
+        <div class="author-content-item-tips"><%= aboutData.journey.tip %></div>
+        <div class="author-content-item-title"><%= aboutData.journey.title %></div>
+        <p class="author-content-item-content"><%= aboutData.journey.content %></p>
+        <div class="lishi"><%= aboutData.journey.lishi %></div>
+        <div class="singlePost">
+          <% if (page.content && page.content.trim().length > 0) { %>
+            <%- page.content %>
+          <% } else { %>
+            <p class="text-center">可于 about.md 配置补充说明。</p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 加载关于页面专用资源 -->
+<%- js('/js/about-page.js') %>

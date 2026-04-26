@@ -1,0 +1,79 @@
+<%
+function layoutDiv() {
+  var el = '';
+  
+  // Schedule 部分 - 倒计时和进度条
+  if (item.show_schedule !== false) {
+    el += `<widget class="widget-wrapper${scrollreveal(' ')} calendar-schedule">`
+      if (item.schedule_title) {
+        el += '<div class="widget-header dis-select">';
+        el += '<span class="name">' + item.schedule_title + '</span>';
+        el += '</div>';
+      }
+      el += '<div class="widget-body fs14">';
+        el += '<div id="card-widget-schedule">';
+          el += '<div id="schedule-area-left">';
+            el += '<div id="schedule-title">距离除夕</div>';
+            el += '<div id="schedule-days"></div>';
+            el += '<div id="schedule-date">2027-02-06</div>';
+          el += '</div>';
+          el += '<div id="schedule-area-right">';
+            el += '<div class="schedule-r0">';
+              el += '<div class="schedule-d0">本年</div>';
+              el += '<div class="schedule-d1">';
+                el += '<span id="p_span_year" class="aside-span1"></span>';
+                el += '<span class="aside-span2">还剩<a></a>天</span>';
+                el += '<progress max="365" id="pBar_year"></progress>';
+              el += '</div>';
+            el += '</div>';
+            el += '<div class="schedule-r1">';
+              el += '<div class="schedule-d0">本月</div>';
+              el += '<div class="schedule-d1">';
+                el += '<span id="p_span_month" class="aside-span1"></span>';
+                el += '<span class="aside-span2">还剩<a></a>天</span>';
+                el += '<progress max="30" id="pBar_month"></progress>';
+              el += '</div>';
+            el += '</div>';
+            el += '<div class="schedule-r2">';
+              el += '<div class="schedule-d0">本周</div>';
+              el += '<div class="schedule-d1">';
+                el += '<span id="p_span_week" class="aside-span1"></span>';
+                el += '<span class="aside-span2">还剩<a></a>天</span>';
+                el += '<progress max="7" id="pBar_week"></progress>';
+              el += '</div>';
+            el += '</div>';
+          el += '</div>';
+        el += '</div>';
+      el += '</div>';
+    el += '</widget>';
+  }
+  
+  // Calendar 部分 - 日历
+  if (item.show_calendar !== false) {
+    el += `<widget class="widget-wrapper${scrollreveal(' ')} calendar-main">`
+      if (item.calendar_title) {
+        el += '<div class="widget-header dis-select">';
+        el += '<span class="name">' + item.calendar_title + '</span>';
+        el += '</div>';
+      }
+      el += '<div class="widget-body fs14">';
+        el += '<div id="card-widget-calendar">';
+          el += '<div id="calendar-area-left">';
+            el += '<div id="calendar-week"></div>';
+            el += '<div id="calendar-date" style="font-size: 48px;"></div>';
+            el += '<div id="calendar-solar"></div>';
+            el += '<div id="calendar-lunar"></div>';
+          el += '</div>';
+          el += '<div id="calendar-area-right">';
+            el += '<div id="calendar-main">';
+            el += '</div>';
+          el += '</div>';
+        el += '</div>';
+      el += '</div>';
+    el += '</widget>';
+  }
+  
+  return el;
+}
+%>
+<%- layoutDiv() %>
