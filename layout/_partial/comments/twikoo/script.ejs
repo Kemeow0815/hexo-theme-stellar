@@ -1,6 +1,6 @@
 <script>
   (function() {
-    const lazyload = <%= theme.comments.lazyload ?? false %>;
+    const lazyload = <%= theme.comments.lazyload || false %>;
     
     function initTwikoo() {
       const el = document.getElementById('twikoo_container');
