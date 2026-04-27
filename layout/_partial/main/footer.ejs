@@ -38,10 +38,10 @@ function layoutDiv() {
   if (content) {
     el += markdown(content)
   }
-  // 添加全站字数统计
-  el += '<div style="margin-top: 8px; text-align: center; max-width: 100%; overflow-wrap: break-word; word-wrap: break-word;">'
-  el += '<span class="totalcount">共发表 ' + site.posts.length + ' 篇Blog · </span>'
-  el += '<span class="post-count">总计 ' + totalcount(site) + ' 字</span>'
+  // 添加全站字数统计和建站时间
+  el += '<div class="site-stats" style="margin-top: 8px; text-align: center; max-width: 100%; overflow-wrap: break-word; word-wrap: break-word; box-sizing: border-box; padding: 0 0.5rem; line-height: 1.8;">'
+  el += '<div class="site-wordcount"><span class="totalcount">共发表 ' + site.posts.length + ' 篇Blog · </span><span class="post-count">总计 ' + totalcount(site) + ' 字</span></div>'
+  el += '<div class="site-runtime-wrapper"><span class="runtime">已运行 <span id="site-runtime">0</span></span></div>'
   el += '</div>'
   el += '</div>'
   el += '</footer>'
