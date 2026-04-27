@@ -3,9 +3,10 @@
 // 主容器
 #about-page
   margin-top: 1rem
-  margin-left: 1rem
-  margin-right: 1rem
-  max-width: 100%
+  margin-left: auto
+  margin-right: auto
+  max-width: 1200px
+  width: calc(100% - 2rem)
   box-sizing: border-box
   overflow: hidden
 
@@ -98,11 +99,12 @@
   flex-direction: column
   gap: 0.5rem
   max-width: 100%
+  align-items: center
 
 .author-content
   display: flex
   flex-wrap: wrap
-  justify-content: space-between
+  justify-content: center
   width: 100%
   gap: 0.5rem
   max-width: 100%
@@ -325,8 +327,8 @@ creativityMain
 // 响应式适配
 @media screen and (max-width: 768px)
   #about-page
-    margin-left: 0.5rem
-    margin-right: 0.5rem
+    margin-left: auto
+    margin-right: auto
     max-width: calc(100vw - 1rem)
   
   .author-main
@@ -397,6 +399,8 @@ creativityMain
 
 @media screen and (max-width: 480px)
   #about-page
+    margin-left: auto
+    margin-right: auto
     max-width: calc(100vw - 1rem)
   
   .author-box
