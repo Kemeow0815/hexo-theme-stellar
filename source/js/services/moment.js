@@ -69,9 +69,20 @@ utils.jq(() => {
               // 内容体
               cell += '<div class="body">';
 
-              // 文本内容
+              // 文本内容 - 处理 HTML 和分隔线
               if (item.text) {
-                cell += '<div class="content">' + item.text + "</div>";
+                let processedText = item.text;
+                // 处理 Telegram 表情 HTML
+                processedText = processedText.replace(
+                  /<i\s+class="emoji"[^>]*><b>([^<]+)<\/b><\/i>/g,
+                  "$1",
+                );
+                // 处理 Markdown 分隔线 ---
+                processedText = processedText.replace(
+                  /---/g,
+                  '<hr style="border:none;border-top:2px solid var(--block-border);margin:12px 0;"/>',
+                );
+                cell += '<div class="content">' + processedText + "</div>";
               }
 
               // 图片 - 支持 fancybox 灯箱
