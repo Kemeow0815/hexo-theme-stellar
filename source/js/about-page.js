@@ -6,6 +6,9 @@
 (function () {
   "use strict";
 
+  // 全局定时器存储，用于 PJAX 切换时清理
+  let textCarouselTimer = null;
+
   // 等待DOM加载完成
   function initAboutPage() {
     // 检查是否在关于页面
@@ -24,6 +27,12 @@
 
     const spans = mask.querySelectorAll("span");
     if (spans.length < 2) return;
+
+    // 清理旧的定时器
+    if (textCarouselTimer) {
+      clearInterval(textCarouselTimer);
+      textCarouselTimer = null;
+    }
 
     let currentIndex = 0;
     const interval = 2500; // 每段话显示2.5秒后切换
@@ -73,18 +82,7 @@
     initStates();
 
     // 启动定时器
-    const timer = setInterval(rotate, interval);
-
-    // 页面卸载时清理定时器
-    window.addEventListener("beforeunload", function () {
-      clearInterval(timer);
-    });
-
-    // 如果页面使用 PJAX，需要在 PJAX 完成后重新初始化
-    document.addEventListener("pjax:complete", function () {
-      clearInterval(timer);
-      initTextCarousel();
-    });
+    textCarouselTimer = setInterval(rotate, interval);
   }
 
   // 初始化入口
@@ -93,6 +91,17 @@
   } else {
     initAboutPage();
   }
+
+  // PJAX 完成后重新初始化
+  document.addEventListener("pjax:complete", function () {
+    // 清理旧定时器
+    if (textCarouselTimer) {
+      clearInterval(textCarouselTimer);
+      textCarouselTimer = null;
+    }
+    // 重新初始化
+    initAboutPage();
+  });
 
   // 导出到全局，供 PJAX 使用
   window.initAboutPage = initAboutPage;

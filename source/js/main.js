@@ -202,8 +202,13 @@ const init = {
     document.querySelectorAll('.tabs .nav-tabs .tab').forEach(element => {
       element.addEventListener('click', event => {
         event.preventDefault();
+        event.stopPropagation();
         // Prevent selected tab to select again.
         if (element.classList.contains('active')) return;
+        
+        // 保存当前滚动位置
+        const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+        
         // Add & Remove active class on `nav-tabs` & `tab-content`.
         [...element.parentNode.children].forEach(target => {
           target.classList.toggle('active', target === element);
@@ -217,6 +222,11 @@ const init = {
         tActive.dispatchEvent(new Event('tabs:click', {
           bubbles: true
         }));
+        
+        // 使用 requestAnimationFrame 确保在 DOM 更新后恢复滚动位置
+        requestAnimationFrame(() => {
+          window.scrollTo(0, scrollPos);
+        });
       });
     });
 
