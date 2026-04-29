@@ -35,6 +35,7 @@ function layout_post_list(partial) {
 %>
 
 <%- partial('_partial/main/navbar/nav_tabs_blog') %>
+<%- partial('_partial/main/post_list/swiper_bar') %>
 <%- layout_post_list(function(post){
   return partial('_partial/main/post_list/post_card', {post: post})
 }) %>
