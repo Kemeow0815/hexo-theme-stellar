@@ -1,36 +1,35 @@
 // utils
 const util = {
-
   // https://github.com/jerryc127/hexo-theme-butterfly
   diffDate: (d, more = false) => {
-    const dateNow = new Date()
-    const datePost = new Date(d)
-    const dateDiff = dateNow.getTime() - datePost.getTime()
-    const minute = 1000 * 60
-    const hour = minute * 60
-    const day = hour * 24
+    const dateNow = new Date();
+    const datePost = new Date(d);
+    const dateDiff = dateNow.getTime() - datePost.getTime();
+    const minute = 1000 * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
 
-    let result
+    let result;
     if (more) {
-      const dayCount = dateDiff / day
-      const hourCount = dateDiff / hour
-      const minuteCount = dateDiff / minute
+      const dayCount = dateDiff / day;
+      const hourCount = dateDiff / hour;
+      const minuteCount = dateDiff / minute;
 
       if (dayCount > 14) {
-        result = null
+        result = null;
       } else if (dayCount >= 1) {
-        result = parseInt(dayCount) + ' ' + ctx.date_suffix.day
+        result = parseInt(dayCount) + " " + ctx.date_suffix.day;
       } else if (hourCount >= 1) {
-        result = parseInt(hourCount) + ' ' + ctx.date_suffix.hour
+        result = parseInt(hourCount) + " " + ctx.date_suffix.hour;
       } else if (minuteCount >= 1) {
-        result = parseInt(minuteCount) + ' ' + ctx.date_suffix.min
+        result = parseInt(minuteCount) + " " + ctx.date_suffix.min;
       } else {
-        result = ctx.date_suffix.just
+        result = ctx.date_suffix.just;
       }
     } else {
-      result = parseInt(dateDiff / day)
+      result = parseInt(dateDiff / day);
     }
-    return result
+    return result;
   },
 
   copy: (id, msg) => {
@@ -56,7 +55,7 @@ const util = {
   },
 
   scrollComment: () => {
-    document.getElementById('comments').scrollIntoView({ behavior: "smooth" });
+    document.getElementById("comments").scrollIntoView({ behavior: "smooth" });
   },
 
   viewportLazyload: (target, func, enabled = true) => {
@@ -71,8 +70,8 @@ const util = {
       }
     });
     observer.observe(target);
-  }
-}
+  },
+};
 
 const hud = {
   _currentToast: null,
@@ -90,9 +89,9 @@ const hud = {
     }
 
     // 创建新的 toast
-    var el = document.createElement('div');
-    el.classList.add('toast');
-    el.classList.add('show');
+    var el = document.createElement("div");
+    el.classList.add("toast");
+    el.classList.add("show");
     el.innerHTML = msg;
     document.body.appendChild(el);
 
@@ -109,13 +108,11 @@ const hud = {
       }
     }, d);
   },
-
-}
+};
 
 // defines
 
-const l_body = document.querySelector('.l_body');
-
+const l_body = document.querySelector(".l_body");
 
 const init = {
   toc: () => {
@@ -142,24 +139,30 @@ const init = {
         if (topSeg) {
           $("#data-toc a.toc-link").removeClass("active");
           var link = "#" + topSeg.attr("id");
-          if (link != '#undefined') {
-            const highlightItem = $('#data-toc a.toc-link[href="' + encodeURI(link) + '"]');
+          if (link != "#undefined") {
+            const highlightItem = $(
+              '#data-toc a.toc-link[href="' + encodeURI(link) + '"]',
+            );
             if (highlightItem.length > 0) {
               highlightItem.addClass("active");
             }
           } else {
-            $('#data-toc a.toc-link:first').addClass("active");
+            $("#data-toc a.toc-link:first").addClass("active");
           }
         }
       }
       function scrollTOC() {
-        const e0 = document.querySelector('#data-toc .toc');
-        const e1 = document.querySelector('#data-toc .toc a.toc-link.active');
+        const e0 = document.querySelector("#data-toc .toc");
+        const e1 = document.querySelector("#data-toc .toc a.toc-link.active");
         if (e0 == null || e1 == null) {
           return;
         }
-        const offsetBottom = e1.getBoundingClientRect().bottom - e0.getBoundingClientRect().bottom + 100;
-        const offsetTop = e1.getBoundingClientRect().top - e0.getBoundingClientRect().top - 64;
+        const offsetBottom =
+          e1.getBoundingClientRect().bottom -
+          e0.getBoundingClientRect().bottom +
+          100;
+        const offsetTop =
+          e1.getBoundingClientRect().top - e0.getBoundingClientRect().top - 64;
         if (offsetTop < 0) {
           e0.scrollBy({ top: offsetTop, behavior: "smooth" });
         } else if (offsetBottom > 0) {
@@ -168,61 +171,69 @@ const init = {
       }
 
       var timeout = null;
-      window.addEventListener('scroll', function () {
+      window.addEventListener("scroll", function () {
         activeTOC();
         if (timeout !== null) clearTimeout(timeout);
-        timeout = setTimeout(function () {
-          scrollTOC();
-        }.bind(this), 50);
+        timeout = setTimeout(
+          function () {
+            scrollTOC();
+          }.bind(this),
+          50,
+        );
       });
-    })
+    });
   },
   sidebar: () => {
     utils.jq(() => {
       $("#data-toc a.toc-link").click(function (e) {
         sidebar.dismiss();
       });
-    })
+    });
   },
   relativeDate: (selector) => {
-    selector.forEach(item => {
-      const $this = item
-      const timeVal = $this.getAttribute('datetime')
-      let relativeValue = util.diffDate(timeVal, true)
+    selector.forEach((item) => {
+      const $this = item;
+      const timeVal = $this.getAttribute("datetime");
+      let relativeValue = util.diffDate(timeVal, true);
       if (relativeValue) {
-        $this.innerText = relativeValue
+        $this.innerText = relativeValue;
       }
-    })
+    });
   },
   /**
    * Tabs tag listener (without twitter bootstrap).
    */
   registerTabsTag: function () {
     // Binding `nav-tabs` & `tab-content` by real time permalink changing.
-    document.querySelectorAll('.tabs .nav-tabs .tab').forEach(element => {
-      element.addEventListener('click', event => {
+    document.querySelectorAll(".tabs .nav-tabs .tab").forEach((element) => {
+      element.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
         // Prevent selected tab to select again.
-        if (element.classList.contains('active')) return;
-        
+        if (element.classList.contains("active")) return;
+
         // 保存当前滚动位置
-        const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
-        
+        const scrollPos =
+          window.pageYOffset || document.documentElement.scrollTop;
+
         // Add & Remove active class on `nav-tabs` & `tab-content`.
-        [...element.parentNode.children].forEach(target => {
-          target.classList.toggle('active', target === element);
+        [...element.parentNode.children].forEach((target) => {
+          target.classList.toggle("active", target === element);
         });
         // https://stackoverflow.com/questions/20306204/using-queryselector-with-ids-that-are-numbers
-        const tActive = document.getElementById(element.querySelector('a').getAttribute('href').replace('#', ''));
-        [...tActive.parentNode.children].forEach(target => {
-          target.classList.toggle('active', target === tActive);
+        const tActive = document.getElementById(
+          element.querySelector("a").getAttribute("href").replace("#", ""),
+        );
+        [...tActive.parentNode.children].forEach((target) => {
+          target.classList.toggle("active", target === tActive);
         });
         // Trigger event
-        tActive.dispatchEvent(new Event('tabs:click', {
-          bubbles: true
-        }));
-        
+        tActive.dispatchEvent(
+          new Event("tabs:click", {
+            bubbles: true,
+          }),
+        );
+
         // 使用 requestAnimationFrame 确保在 DOM 更新后恢复滚动位置
         requestAnimationFrame(() => {
           window.scrollTo(0, scrollPos);
@@ -230,7 +241,7 @@ const init = {
       });
     });
 
-    window.dispatchEvent(new Event('tabs:register'));
+    window.dispatchEvent(new Event("tabs:register"));
   },
 
   canonicalCheck: () => {
@@ -242,35 +253,46 @@ const init = {
           return;
         }
         const scriptUrl = `https://${window.canonical.originalHost}${window.canonical.param.checklink}`;
-        const script = document.createElement('script');
+        const script = document.createElement("script");
         script.src = scriptUrl;
-        script.type = 'text/javascript';
-        script.onload = function () { resolve(true); };
-        script.onerror = function () { resolve(false); };
+        script.type = "text/javascript";
+        script.onload = function () {
+          resolve(true);
+        };
+        script.onerror = function () {
+          resolve(false);
+        };
         document.head.appendChild(script);
       });
     }
     async function showTip(isOfficial = false) {
-      const meta = document.createElement('meta');
-      meta.name = 'robots';
-      meta.content = 'noindex, nofollow';
+      const meta = document.createElement("meta");
+      meta.name = "robots";
+      meta.content = "noindex, nofollow";
       document.head.appendChild(meta);
-      const notice = document.createElement('div');
+      const notice = document.createElement("div");
       const originalURL = `https://${canonical.originalHost}`;
-      const currentURL = canonical.param.permalink.startsWith("http") ? canonical.param.permalink : originalURL;
+      const currentURL = canonical.param.permalink.startsWith("http")
+        ? canonical.param.permalink
+        : originalURL;
       if (isOfficial) {
-        const closeEnable = window.localStorage.getItem('Stellar.canonical.closeEnable') === 'true'
-        const closedToday = window.localStorage.getItem('Stellar.canonical.closeTime') === new Date().toDateString()
-        if ((closeEnable && closedToday) || !(await originStatusCheck())) return;
-        notice.className = 'canonical-tip official';
+        const closeEnable =
+          window.localStorage.getItem("Stellar.canonical.closeEnable") ===
+          "true";
+        const closedToday =
+          window.localStorage.getItem("Stellar.canonical.closeTime") ===
+          new Date().toDateString();
+        if ((closeEnable && closedToday) || !(await originStatusCheck()))
+          return;
+        notice.className = "canonical-tip official";
         notice.innerHTML = `
           <a href="${currentURL}" target="_self" rel="noopener noreferrer">
           本站为官方备用站，仅供应急。点击移步主站<br>${originalURL}
           </a>
-          ${canonical.closeEnable ? '<button id="canonical-close">' + canonical.closeText || '关闭提示' + '</button>' : ''}
+          ${canonical.closeEnable ? '<button id="canonical-close">' + canonical.closeText || "关闭提示" + "</button>" : ""}
         `;
       } else {
-        notice.className = 'canonical-tip unofficial';
+        notice.className = "canonical-tip unofficial";
         notice.innerHTML = `
         <a href="${currentURL}" target="_self" rel="noopener noreferrer">
         <div class="headline icon">☠️</div>
@@ -280,19 +302,22 @@ const init = {
         `;
       }
       document.body.appendChild(notice);
-      const closeBtn = notice.querySelector('#canonical-close');
+      const closeBtn = notice.querySelector("#canonical-close");
       if (closeBtn) {
-        closeBtn.addEventListener('click', function () {
-          window.localStorage.setItem('Stellar.canonical.closeEnable', "true")
-          window.localStorage.setItem('Stellar.canonical.closeTime', new Date().toDateString())
-          notice.style.display = 'none';
+        closeBtn.addEventListener("click", function () {
+          window.localStorage.setItem("Stellar.canonical.closeEnable", "true");
+          window.localStorage.setItem(
+            "Stellar.canonical.closeTime",
+            new Date().toDateString(),
+          );
+          notice.style.display = "none";
         });
       }
     }
     if (!canonical.originalHost) return;
     const currentURL = new URL(window.location.href);
-    const currentHost = currentURL.hostname.replace(/^www\./, '');
-    if (currentHost == 'localhost') return;
+    const currentHost = currentURL.hostname.replace(/^www\./, "");
+    if (currentHost == "localhost") return;
     const encodedCurrentHost = window.btoa(currentHost);
     const isCurrentHostValid = canonical.encoded === encodedCurrentHost;
     const canonicalTag = document.querySelector('link[rel="canonical"]');
@@ -308,17 +333,15 @@ const init = {
       return;
     }
     const canonicalURL = new URL(canonicalTag.href);
-    const canonicalHost = canonicalURL.hostname.replace(/^www\./, '');
+    const canonicalHost = canonicalURL.hostname.replace(/^www\./, "");
     const encodedCanonicalHost = window.btoa(canonicalHost);
     const isCanonicalHostValid = canonical.encoded === encodedCanonicalHost;
     if (isCanonicalHostValid && isCurrentHostValid) {
       return;
     }
     showTip(canonical.officialHosts?.includes(currentHost));
-  }
-
-}
-
+  },
+};
 
 // Stellar namespace
 window.stellar = window.stellar || {};
@@ -330,13 +353,13 @@ window.stellar = window.stellar || {};
 stellar.initPage = function () {
   init.toc();
   init.sidebar();
-  init.relativeDate(document.querySelectorAll('#post-meta time'));
+  init.relativeDate(document.querySelectorAll("#post-meta time"));
   init.registerTabsTag();
-  
+
   // Reinitialize comments after PJAX navigation
   if (stellar.initComments) {
     for (const commentSystem in stellar.initComments) {
-      if (typeof stellar.initComments[commentSystem] === 'function') {
+      if (typeof stellar.initComments[commentSystem] === "function") {
         stellar.initComments[commentSystem]();
       }
     }
@@ -348,6 +371,6 @@ stellar.initPage();
 init.canonicalCheck();
 
 // Listen for PJAX navigation complete
-document.addEventListener('pjax:complete', function () {
+document.addEventListener("pjax:complete", function () {
   stellar.initPage();
 });
