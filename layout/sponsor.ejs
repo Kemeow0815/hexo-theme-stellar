@@ -1,0 +1,53 @@
+<%
+// 赞助页面模板
+// 基于 Stellar 主题布局
+
+var pageTitle = page.title || '赞赏支持';
+var pageSubtitle = page.subtitle || '感谢每一位支持我的朋友';
+%>
+
+<div class="sponsor-page">
+  <!-- 页面头部 -->
+  <div class="sponsor-header">
+    <h1 class="sponsor-title"><%= pageTitle %></h1>
+    <p class="sponsor-subtitle"><%= pageSubtitle %></p>
+  </div>
+
+  <!-- 赞赏方式 -->
+  <div class="sponsor-methods">
+    <div class="sponsor-method-item">
+      <div class="sponsor-qr">
+        <img src="/blog/images/alipay.avif" alt="支付宝收款码" class="sponsor-qr-img">
+      </div>
+      <span class="sponsor-method-name">支付宝收款码</span>
+    </div>
+    <div class="sponsor-method-item">
+      <div class="sponsor-qr">
+        <img src="/blog/images/weixin.avif" alt="微信收款码" class="sponsor-qr-img">
+      </div>
+      <span class="sponsor-method-name">微信收款码</span>
+    </div>
+  </div>
+
+  <!-- 感谢图片 -->
+  <div class="sponsor-thanks">
+    <img src="https://p.liiiu.cn/i/2025/10/10/68e9199157351.webp" alt="感谢支持" class="sponsor-thanks-img">
+  </div>
+
+  <!-- 赞赏说明 -->
+  <div class="sponsor-description">
+    <p>如果您觉得我的博客对您有帮助，欢迎赞赏支持！</p>
+    <p>您的每一份支持都是我继续创作的动力。</p>
+  </div>
+
+  <!-- 赞赏列表 -->
+  <div class="sponsor-list-section">
+    <h2 class="sponsor-list-title">赞赏名单</h2>
+    <div class="sponsor-list" id="sponsor-list">
+      <div class="sponsor-loading">
+        <div class="loading-spinner"></div>
+        <span>加载中...</span>
+      </div>
+    </div>
+  </div>
+</div>

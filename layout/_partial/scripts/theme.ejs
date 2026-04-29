@@ -81,13 +81,18 @@
     const toggleBtn = document.getElementById('ThemeToggle')
 
     if (toggleBtn) {
-      toggleBtn.closest('a')?.addEventListener('click', (e) => {
-        e.preventDefault()
-        switchTheme()
-        // 切换后更新图标
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'auto'
-        updateThemeToggleIcon(currentTheme)
-      })
+      const linkElement = toggleBtn.closest('a')
+      if (linkElement && !linkElement.dataset.themeBound) {
+        linkElement.dataset.themeBound = 'true'
+        linkElement.addEventListener('click', (e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          switchTheme()
+          // 切换后更新图标
+          const currentTheme = document.documentElement.getAttribute('data-theme') || 'auto'
+          updateThemeToggleIcon(currentTheme)
+        })
+      }
     }
   }
 

@@ -4,33 +4,70 @@
     css: `<%- conf.css %>`,
     js: `<%- conf.js %>`
   };
-  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
-  if (ctx.fancybox.selector) {
-    selector += `, ${ctx.fancybox.selector}`
-  }
-  var needFancybox = document.querySelectorAll(selector).length !== 0;
-  if (!needFancybox) {
-    const memos = document.getElementsByClassName('ds-memos');
-    if (memos != undefined && memos.length > 0) {
-      needFancybox = true;
+
+  // Fancybox 初始化函数
+  function initFancybox() {
+    var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+    if (ctx.fancybox.selector) {
+      selector += `, ${ctx.fancybox.selector}`
     }
-    const fancybox = document.getElementsByClassName('with-fancybox');
-    if (fancybox != undefined && fancybox.length > 0) {
-      needFancybox = true;
+    var needFancybox = document.querySelectorAll(selector).length !== 0;
+    if (!needFancybox) {
+      const memos = document.getElementsByClassName('ds-memos');
+      if (memos != undefined && memos.length > 0) {
+        needFancybox = true;
+      }
+      const fancybox = document.getElementsByClassName('with-fancybox');
+      if (fancybox != undefined && fancybox.length > 0) {
+        needFancybox = true;
+      }
+      // 检查是否有 gallery 类
+      const galleries = document.getElementsByClassName('gallery');
+      if (galleries != undefined && galleries.length > 0) {
+        needFancybox = true;
+      }
     }
-  }
-  if (needFancybox) {
-    utils.css(ctx.fancybox.css);
-    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
-      Fancybox.bind(selector, {
-        hideScrollbar: false,
-        Thumbs: {
-          autoStart: false,
-        },
-        caption: (fancybox, slide) => {
-          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+    if (needFancybox) {
+      // 如果 Fancybox 已经加载，直接绑定
+      if (typeof Fancybox !== "undefined") {
+        try {
+          Fancybox.destroy();
+        } catch (e) {
+          // 忽略错误
         }
+        Fancybox.bind(selector, {
+          hideScrollbar: false,
+          Thumbs: {
+            autoStart: false,
+          },
+          caption: (fancybox, slide) => {
+            return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+          }
+        });
+        return;
+      }
+
+      // 否则加载 Fancybox
+      utils.css(ctx.fancybox.css);
+      utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+        Fancybox.bind(selector, {
+          hideScrollbar: false,
+          Thumbs: {
+            autoStart: false,
+          },
+          caption: (fancybox, slide) => {
+            return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+          }
+        });
       });
-    })
+    }
   }
+
+  // 首次加载
+  initFancybox();
+
+  // PJAX 兼容
+  document.addEventListener("pjax:complete", function() {
+    setTimeout(initFancybox, 100);
+  });
 </script>

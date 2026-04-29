@@ -5,10 +5,11 @@ function layoutDiv() {
   el += '<div class="navbar-blur">';
   el += '<div class="navbar-container">';
   el += '<nav class="post">';
+  const indexPath = config.index_generator.path || '/';
   if (is_home()) {
-    el += '<a class="active" href="' + pretty_url(config.index_generator.path) + '">' + __("btn.recent_publish") + '</a>';
+    el += '<a class="active" href="' + url_for(indexPath) + '">' + __("btn.recent_publish") + '</a>';
   } else {
-    el += '<a href="' + pretty_url(config.index_generator.path) + '">' + __("btn.recent_publish") + '</a>';
+    el += '<a href="' + url_for(indexPath) + '">' + __("btn.recent_publish") + '</a>';
   }
 
   if (site.categories && site.categories.length > 0) {

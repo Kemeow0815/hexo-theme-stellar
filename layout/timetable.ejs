@@ -1,0 +1,37 @@
+<%
+// 课程表页面专用模板
+// 去除左右侧边栏，保留明暗模式和底部导航
+
+var site_background = ''
+if (theme.style.site && theme.style.site['background-image']) {
+  site_background += `<div class="sitebg">`
+  site_background += `<div class="siteblur"></div>`
+  site_background += `</div>`
+}
+
+var html = `<!DOCTYPE html>`
+if (theme.style.prefers_theme === 'auto') {
+    html += `<html lang="${page.lang}">`
+} else {
+  html += `<html lang="${page.lang}" data-theme="${theme.style.prefers_theme}">`
+}
+  html += partial('_partial/head')
+  html += `<body>`
+    html += site_background
+    html += `<div id="l_cover">${partial('_partial/cover/index').trim()}</div>`
+    html += `<div class="l_body content" id="start" layout="timetable">`
+      html += `<div class="l_main timetable-main" id="main">`
+        html += partial('_partial/sidebar/logo', {where: 'main'})
+        html += page.content
+        html += `<div class="main-mask" onclick="sidebar.dismiss()"></div>`
+      html += `</div>`
+      html += partial('_partial/menubtn')
+    html += `</div>`
+    html += `<div class="scripts">`
+      html += partial('_partial/scripts')
+    html += `</div>`
+    html += `<div class="page-loading-bar"><img src="${theme.default.loading}"></div>`
+  html += `</body>`
+html += `</html>`
+%>
+<%- html %>
