@@ -2,8 +2,19 @@
 // 赞助页面模板
 // 基于 Stellar 主题布局
 
-var pageTitle = page.title || '赞赏支持';
-var pageSubtitle = page.subtitle || '感谢每一位支持我的朋友';
+// 读取 sponsor.yml 配置
+var sponsorConfig = {};
+try {
+  sponsorConfig = site.data.sponsor || {};
+} catch(e) {
+  console.log('sponsor.yml not found');
+}
+
+var pageTitle = sponsorConfig.title || page.title || '赞赏支持';
+var pageSubtitle = sponsorConfig.subtitle || page.subtitle || '感谢每一位支持我的朋友';
+var methods = sponsorConfig.methods || {};
+var description = sponsorConfig.description || '';
+var api = sponsorConfig.api || '';
 %>
 
 <div class="sponsor-page">
@@ -15,18 +26,23 @@ var pageSubtitle = page.subtitle || '感谢每一位支持我的朋友';
 
   <!-- 赞赏方式 -->
   <div class="sponsor-methods">
+    <% if (methods.alipay && methods.alipay.qr) { %>
     <div class="sponsor-method-item">
       <div class="sponsor-qr">
-        <img src="/images/alipay.avif" alt="支付宝收款码" class="sponsor-qr-img">
+        <img src="<%= methods.alipay.qr %>" alt="<%= methods.alipay.name || '支付宝' %>收款码" class="sponsor-qr-img">
       </div>
-      <span class="sponsor-method-name">支付宝收款码</span>
+      <span class="sponsor-method-name"><%= methods.alipay.name || '支付宝' %>收款码</span>
     </div>
+    <% } %>
+    
+    <% if (methods.wechat && methods.wechat.qr) { %>
     <div class="sponsor-method-item">
       <div class="sponsor-qr">
-        <img src="/images/weixin.avif" alt="微信收款码" class="sponsor-qr-img">
+        <img src="<%= methods.wechat.qr %>" alt="<%= methods.wechat.name || '微信支付' %>收款码" class="sponsor-qr-img">
       </div>
-      <span class="sponsor-method-name">微信收款码</span>
+      <span class="sponsor-method-name"><%= methods.wechat.name || '微信支付' %>收款码</span>
     </div>
+    <% } %>
   </div>
 
   <!-- 感谢图片 -->
@@ -35,15 +51,16 @@ var pageSubtitle = page.subtitle || '感谢每一位支持我的朋友';
   </div>
 
   <!-- 赞赏说明 -->
+  <% if (description) { %>
   <div class="sponsor-description">
-    <p>如果您觉得我的博客对您有帮助，欢迎赞赏支持！</p>
-    <p>您的每一份支持都是我继续创作的动力。</p>
+    <%- markdown(description) %>
   </div>
+  <% } %>
 
   <!-- 赞赏列表 -->
   <div class="sponsor-list-section">
     <h2 class="sponsor-list-title">赞赏名单</h2>
-    <div class="sponsor-list" id="sponsor-list">
+    <div class="sponsor-list" id="sponsor-list" data-api="<%= api %>">
       <div class="sponsor-loading">
         <div class="loading-spinner"></div>
         <span>加载中...</span>

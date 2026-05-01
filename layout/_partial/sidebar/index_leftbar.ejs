@@ -119,7 +119,7 @@ function layoutFooterDiv() {
   el += '<div class="social-wrap">';
   for (let id of Object.keys(social)) {
     let item = social[id];
-    if (item.icon && (item.url || item.onclick)) {
+    if (item.icon && (item.url || item.onclick || item.attr)) {
       el += '<a class="social"';
       if (item.title) {
         el += ' title="' + item.title + '"';
@@ -131,9 +131,15 @@ function layoutFooterDiv() {
         } else {
           el += ' rel="noopener noreferrer"';
         }
-      } else if (item.onclick) {
+      } else {
+        el += ' href="#"';
+      }
+      if (item.onclick) {
         item.onclick = item.onclick.replace(/"|\'/g, '&quot;');
         el += ' onclick="' + item.onclick + '"';
+      }
+      if (item.attr) {
+        el += ' ' + item.attr;
       }
       el += '>';
       el += icon(item.icon, 'no-lazy')
