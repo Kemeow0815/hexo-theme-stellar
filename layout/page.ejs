@@ -43,6 +43,10 @@ function layoutDiv() {
   if (page.h1 || page.title || (page.content && page.content.length > 0)) {
     el += partial('_partial/main/navbar/article_banner')
   }
+  // AI 摘要 - 显示在文章顶部
+  if (page.ai_summary) {
+    el += partial('_partial/widgets/ai-summary')
+  }
   el += `<article class="${articleClass()}">`
   if (page.content && page.content.length > 0) {
     el += page.content
